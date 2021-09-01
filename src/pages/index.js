@@ -2,17 +2,14 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../../styles/Home.module.css";
 import styled from "styled-components";
-
-export const Header = styled.div`
-  width: 100vw;
-  height: 60px;
-  background-color: white;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-`;
+import axios from "axios";
+import Link from "next/link";
+import { getBlockchain } from "../ethereum";
+import { useEffect, useState } from "react";
 
 export const Container = styled.div`
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   flex-direction: row;
   flex-wrap: wrap;
 `;
@@ -46,14 +43,20 @@ export const P = styled.p`
   /* word-wrap: break-word; */
   background-color: black;
   font-family: monospace;
-  margin: 5px;
+  margin-left: 5px;
   padding: 2px;
 `;
 
 export default function Home() {
+  const [data, setData] = useState([]);
+  const [nft, setNft] = useState();
+
+  useEffect(() => {
+    (async () => {})();
+  }, []);
+
   return (
     <>
-      <Header></Header>
       <div className={styles.container}>
         <Head>
           <title>Create Next App</title>
