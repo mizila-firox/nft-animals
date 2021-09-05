@@ -4,7 +4,9 @@ import styles from "../../styles/Home.module.css";
 import styled from "styled-components";
 import axios from "axios";
 import Link from "next/link";
-import { getBlockchain } from "../ethereum";
+// import { getBlockchain } from "../ethereum";
+import getBlockchain from "../ethereum.js";
+
 import { useEffect, useState } from "react";
 
 export const Container = styled.div`
@@ -49,10 +51,32 @@ export const P = styled.p`
 
 export default function Home() {
   const [data, setData] = useState([]);
-  const [nft, setNft] = useState();
+  // const [nft, setNft] = useState();
 
   useEffect(() => {
-    (async () => {})();
+    const init = async () => {
+      const { nft } = await getBlockchain();
+      // const balance = await nft.balanceOf(
+      //   nft.provider.provider.selectedAddress
+      // );
+
+      // setTokenInfo(nft);
+
+      // console.log(nft.provider.provider.selectedAddress);
+      // console.log(nft.provider);
+
+      // console.log(`balance: ${balance}`);
+
+      // for (let i = 0; i < balance; i++) {
+      //   let tokenURI = await nft.tokenURI(i);
+      //   const data = await axios.get(tokenURI);
+      //   const name = await data.data.title;
+      //   const picture = await data.data.properties.image.description;
+      //   console.log(data);
+      //   setImages((images) => [...images, { picture, name }]);
+      // }
+    };
+    init();
   }, []);
 
   return (

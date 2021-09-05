@@ -7,14 +7,39 @@ contract NFT is ERC721 {
     uint256 public nextTokenId;
     address public admin;
 
+    struct Nft {
+        uint256 id;
+        string name;
+        string imageUrl;
+        uint256 date;
+        address owner;
+    }
+
+    mapping(address => mapping(uint256 => Nft)) nfts;
+
     constructor() ERC721("My Nft", "NFT") {
         admin = msg.sender;
     }
 
-    function mint(address to) external payable {
+    function mint(
+        address to,
+        string memory name,
+        string memory imageUrl
+    ) external payable {
         require(msg.sender == admin, "must be admin");
         require(msg.value == 0.01 ether, "Value must be equal to 0.01 ether");
         _safeMint(to, nextTokenId);
+
+        Nft memory n = Nft({
+            id: nextTokenId,
+            name: name,
+            imageUrl: imageUrl,
+            date: block.timestamp,
+            owner: to
+        });
+
+        nfts[to][nextTokenId] = n;
+
         nextTokenId++;
     }
 

@@ -1,7 +1,7 @@
 import { Contract, ethers } from "ethers";
-// import NFT from "./contracts/NFT.json";
+import NFT from "./contracts/NFT.json";
 
-const getBlockchain = () => {
+const getBlockchain = () =>
   new Promise((resolve, reject) => {
     window.addEventListener("load", async () => {
       if (window.ethereum) {
@@ -10,7 +10,7 @@ const getBlockchain = () => {
         const signer = provider.getSigner();
 
         const nft = new Contract(
-          NFT.netowrks[window.ethereum.networkVersion].address,
+          NFT.networks[window.ethereum.networkVersion].address,
           NFT.abi,
           signer
         );
@@ -19,6 +19,5 @@ const getBlockchain = () => {
       resolve({ nft: undefined });
     });
   });
-};
 
 export default getBlockchain;

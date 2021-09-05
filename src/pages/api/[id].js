@@ -1,40 +1,46 @@
+import one from "../../../public/one.png";
+import two from "../../../public/two.png";
+// console.log(one);
+// console.log(two);
+
 const nfts = {
   0: {
-    title: "Swiss Village Lake",
+    title: "Small Unicorn",
     type: "object",
     properties: {
       name: {
         type: "string",
-        description: "Identifies the asset to which this NFT represents",
+        description: "Small Unicorn",
       },
       description: {
         type: "string",
-        description: "A Swiss village",
+        name: "Small Unicorn",
+        price: 0.01,
+        // description: "",
       },
       image: {
         type: "string",
-        description:
-          "https://live.staticflickr.com/4086/5221038493_a9b268c417_c.jpg",
+        description: one,
       },
     },
   },
   1: {
-    title: "Swiss Landscape",
+    title: "Bigger Unicorn",
     type: "object",
     properties: {
       name: {
         type: "string",
-        description: "Identifies the asset to which this NFT represents",
+        description: "Bigger Unicorn",
       },
       description: {
         type: "string",
-        description: "Describes the asset to which this NFT represents",
+        name: "Bigger Unicorn",
+        price: 0.01,
+        // description: "",
       },
       image: {
         type: "string",
-        description:
-          "https://engineerontour.com/wp-content/uploads/2020/02/village-3334823.jpg",
-        // "A URI pointing to a resource with mime type image/* representing the asset to which this NFT represents. Consider making any images at a width between 320 and 1080 pixels and aspect ratio between 1.91:1 and 4:5 inclusive.",
+        description: two,
       },
     },
   },
@@ -43,7 +49,11 @@ const nfts = {
 export const api = (req, res) => {
   const { id } = req.query;
 
-  res.status(200).json({ id });
+  // console.log(nfts[0]);
+
+  console.log(nfts[id].properties.image.description.src);
+
+  res.status(200).json(nfts[id]);
 };
 
 export default api;
