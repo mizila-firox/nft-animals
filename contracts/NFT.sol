@@ -15,10 +15,18 @@ contract NFT is ERC721 {
         address owner;
     }
 
-    mapping(address => mapping(uint256 => Nft)) nfts;
+    mapping(address => mapping(uint256 => Nft)) public nfts;
 
     constructor() ERC721("My Nft", "NFT") {
         admin = msg.sender;
+    }
+
+    function getNfts(address addr, uint256 i)
+        external
+        view
+        returns (Nft memory)
+    {
+        return nfts[addr][i];
     }
 
     function mint(

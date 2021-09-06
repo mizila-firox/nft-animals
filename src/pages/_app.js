@@ -1,6 +1,8 @@
 import "../../styles/globals.css";
 import Link from "next/link";
 import styled from "styled-components";
+import getBlockchain from "../ethereum";
+import { useState } from "react";
 
 export const Container = styled.div`
   width: 100vw;
@@ -34,6 +36,17 @@ export const P2 = styled.p`
 `;
 
 function MyApp({ Component, pageProps }) {
+  const [address, setAddress] = useState("");
+
+  const getAcc = async () => {
+    const { nft } = await getBlockchain();
+    setAddress(nft.provider.provider.selectedAddress);
+  };
+
+  getAcc();
+
+  // console.log(address);
+
   return (
     <Container>
       <Header>
@@ -49,7 +62,7 @@ function MyApp({ Component, pageProps }) {
         </Link>
 
         <div style={{ width: "100vw", marginRight: "100px" }}>
-          <P style={{ fontSize: 20 }}> account: 0x0</P>
+          <P style={{ fontSize: 20 }}> account: {address ? address : "0x0"}</P>
         </div>
       </Header>
       <Component {...pageProps} />

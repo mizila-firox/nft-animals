@@ -1,4 +1,4 @@
-import { Contract, ethers } from "ethers";
+import { ethers, Contract } from "ethers";
 import NFT from "./contracts/NFT.json";
 
 const getBlockchain = () =>

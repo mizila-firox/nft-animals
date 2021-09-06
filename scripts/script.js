@@ -9,6 +9,15 @@ module.exports = async () => {
   console.log(value);
 
   // await nft
+  //   .mint(account, "Small Unicorn", "http://localhost:3000/one.png", {
+  //     from: account,
+  //     value: value,
+  //   })
+  //   .then((receipt) => {
+  //     console.log(receipt);
+  //   });
+
+  // await nft
   //   .mint(account, "Big Unicorn", "http://localhost:3000/two.png", {
   //     from: account,
   //     value: value,
@@ -16,6 +25,8 @@ module.exports = async () => {
   //   .then((receipt) => {
   //     console.log(receipt);
   //   });
+
+  // console.log(await nft.balanceOf(account));
 
   // let balance = await token1.balanceOf(account);
   // console.log(`balance of this account: ${balance}`);

@@ -42,45 +42,63 @@ export const ExteriorCard = styled.div`
 `;
 
 export const P = styled.p`
-  /* word-wrap: break-word; */
   background-color: black;
+  max-width: fit-content;
   font-family: monospace;
   margin-left: 5px;
   padding: 2px;
+  border-radius: 1px;
+  padding: 3px;
 `;
 
 export default function Home() {
   const [data, setData] = useState([]);
-  // const [nft, setNft] = useState();
+  const [token, setToken] = useState();
+  const [account, setAccount] = useState("");
+  const [info, setInfo] = useState([]);
 
   useEffect(() => {
     const init = async () => {
       const { nft } = await getBlockchain();
-      // const balance = await nft.balanceOf(
-      //   nft.provider.provider.selectedAddress
-      // );
+      console.log(nft);
+      // const o = await nft.ownerOf(0);
+      // console.log(o);
+      const balance = await nft.balanceOf(
+        nft.provider.provider.selectedAddress
+      );
+      setToken(nft);
 
-      // setTokenInfo(nft);
+      console.log(nft.provider.provider.selectedAddress);
 
-      // console.log(nft.provider.provider.selectedAddress);
-      // console.log(nft.provider);
+      setAccount(nft.provider.provider.selectedAddress);
 
-      // console.log(`balance: ${balance}`);
+      const acc = nft.provider.provider.selectedAddress;
+      for (let i = 0; i < balance; i++) {
+        const item = await nft.getNfts(acc, i);
+        let date = new Date(Number(item.date) * 1000);
 
-      // for (let i = 0; i < balance; i++) {
-      //   let tokenURI = await nft.tokenURI(i);
-      //   const data = await axios.get(tokenURI);
-      //   const name = await data.data.title;
-      //   const picture = await data.data.properties.image.description;
-      //   console.log(data);
-      //   setImages((images) => [...images, { picture, name }]);
-      // }
+        const obj = {
+          name: item.name,
+          image: item.imageUrl,
+          date: item.date,
+          owner: item.owner,
+        };
+
+        setInfo((info) => [...info, obj]);
+
+        // const data = await axios.get(tokenURI);
+        // const name = await data.data.title;
+        // const picture = await data.data.properties.image.description;
+        // console.log(data);
+        // setInfo((info) => [...info, { picture, name }]);
+      }
     };
     init();
   }, []);
 
   return (
     <>
+      {/* {console.log(info)} */}
       <div className={styles.container}>
         <Head>
           <title>Create Next App</title>
@@ -89,26 +107,31 @@ export default function Home() {
         </Head>
 
         <Container>
-          <ExteriorCard>
+          {info.map((item, key) => {
+            return (
+              <ExteriorCard key={key}>
+                <Card>
+                  <img src={item.image} width="100px" alt="" />
+                </Card>
+                <div>
+                  <P>Name: {item.name}</P>
+                  <P>price: 0.01 eth</P>
+                  <P>Owner: {item.owner}</P>
+                </div>
+              </ExteriorCard>
+            );
+          })}
+
+          {/* <ExteriorCard>
             <Card>
-              <img src="./one.png" width="100px" alt="" />
+              <img src="http://localhost:3000/two.png" width="80px" alt="" />
             </Card>
             <div>
-              <P>Name</P>
-              <P>price</P>
-              <P>amount</P>
+              <P>Name:</P>
+              <P>price:</P>
+              <P>Owner:</P>
             </div>
-          </ExteriorCard>
-          <ExteriorCard>
-            <Card>
-              <img src="./two.png" width="80px" alt="" />
-            </Card>
-            <div>
-              <P>Name</P>
-              <P>price</P>
-              <P>amount</P>
-            </div>
-          </ExteriorCard>
+          </ExteriorCard> */}
         </Container>
       </div>
     </>
