@@ -66,10 +66,10 @@ export default function Home() {
       const balance = await nft.balanceOf(
         nft.provider.provider.selectedAddress
       );
+      console.log(`balance ${balance}`);
       setToken(nft);
 
       console.log(nft.provider.provider.selectedAddress);
-
       setAccount(nft.provider.provider.selectedAddress);
 
       const acc = nft.provider.provider.selectedAddress;
