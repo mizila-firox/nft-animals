@@ -74,20 +74,23 @@ export default function Home() {
       console.log(nft.provider.provider.selectedAddress);
       setAccount(nft.provider.provider.selectedAddress);
 
-      const acc = nft.provider.provider.selectedAddress;
-      for (let i = 0; i < balance; i++) {
-        const item = await nft.getNfts(acc, i);
-        let date = new Date(Number(item.date) * 1000);
+      console.log(nft);
 
+      const acc = nft.provider.provider.selectedAddress;
+
+      for (let i = 0; i < balance; i++) {
+        const tokenId = await nft.tokenOfOwnerByIndex(acc, i);
+        // console.log(pae);
+
+        const item = await nft.getNfts(acc, parseInt(tokenId));
+        // let date = new Date(Number(item.date) * 1000);
         const obj = {
           name: item.name,
           image: item.imageUrl,
           date: item.date,
           owner: item.owner,
         };
-
         setInfo((info) => [...info, obj]);
-
         // const data = await axios.get(tokenURI);
         // const name = await data.data.title;
         // const picture = await data.data.properties.image.description;

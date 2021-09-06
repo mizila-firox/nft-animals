@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import getBlockchain from "../ethereum";
 
 export const Container = styled.div`
   display: flex;
@@ -75,24 +76,66 @@ export const CardHolder = styled.div`
   border-radius: 5px;
 `;
 
-const market = () => {
+const Market = () => {
+  const [address, setAddress] = useState("");
+  const [token, setToken] = useState();
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    const init = async () => {
+      const { nft } = await getBlockchain();
+      setToken(nft);
+      setAddress(nft.provider.provider.selectedAddress);
+
+      const contract_address = "0xD7aCDa867847F37AEA30ac3279863c0eE6514691";
+
+      const balance = await nft.balanceOf(contract_address);
+
+      console.log(`market balance: ${parseInt(balance)}`);
+
+      for (let i = 0; i < balance; i++) {
+        const tokenId = await nft.tokenOfOwnerByIndex(contract_address, i);
+        // console.log(parseInt(tokenId));
+        const item = await nft.getNftsMarket(parseInt(tokenId));
+
+        const obj = {
+          name: item.name,
+          image: item.imageUrl,
+          date: item.date,
+          owner: item.owner,
+          price: item.price,
+        };
+
+        setItems((items) => [...items, obj]);
+      }
+    };
+
+    init();
+  }, []);
+
   return (
     <Container>
-      <ExteriorCard>
-        <CardHolder>
-          <Card color="blue">
-            <img src="./one.png" width="100px" alt="" />
-          </Card>
-          <CardItems>
-            <P>Name</P>
-            <P>price</P>
-            <P>amount</P>
-          </CardItems>
-          <CardFooter>qwewq</CardFooter>
-        </CardHolder>
-      </ExteriorCard>{" "}
+      {items.map((item, key) => {
+        // return <div key={key}>q</div>;
+        return (
+          <ExteriorCard key={key}>
+            {console.log(item)}
+            <CardHolder>
+              <Card color="blue">
+                <img src={item.image} width="100px" alt="" />
+              </Card>
+              <CardItems>
+                <P>Name {item.name}</P>
+                <P>Owner {item.owner}</P>
+                {/* <P>price {item.price}</P> */}
+              </CardItems>
+              <CardFooter>qwewq</CardFooter>
+            </CardHolder>
+          </ExteriorCard>
+        );
+      })}
     </Container>
   );
 };
 
-export default market;
+export default Market;

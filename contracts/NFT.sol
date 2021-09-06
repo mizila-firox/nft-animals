@@ -2,11 +2,12 @@
 pragma solidity >=0.7.0 <0.9.0;
 
 import "../node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol";
+// import "../node_modules/@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol";
+import "../node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
-contract NFT is ERC721 {
+contract NFT is ERC721Enumerable {
     uint256 public nextTokenId;
     address public admin;
-
     struct Nft {
         uint256 id;
         string name;
@@ -34,7 +35,9 @@ contract NFT is ERC721 {
     {
         require(msg.sender == admin, "you're not allowed. must be admin");
 
+        // _safeMint(address(this), nextTokenId);
         _safeMint(address(this), nextTokenId);
+
         Nft memory n = Nft({
             id: nextTokenId,
             name: _name,
