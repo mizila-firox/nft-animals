@@ -59,19 +59,14 @@ export default function Home() {
 
   useEffect(() => {
     const init = async () => {
-      // if (nft) {
-      //   console.log("there is");
-      // } else {
-      //   console.log("there is not");
-      // }
       const { nft } = await getBlockchain();
+      console.log("called");
       setToken(nft);
       const balance = await nft.balanceOf(
         nft.provider.provider.selectedAddress
       );
       console.log(`balance ${balance}`);
 
-      console.log(nft.provider.provider.selectedAddress);
       setAccount(nft.provider.provider.selectedAddress);
 
       console.log(nft);
@@ -80,7 +75,6 @@ export default function Home() {
 
       for (let i = 0; i < balance; i++) {
         const tokenId = await nft.tokenOfOwnerByIndex(acc, i);
-        // console.log(pae);
 
         const item = await nft.getNfts(acc, parseInt(tokenId));
         // let date = new Date(Number(item.date) * 1000);
@@ -103,7 +97,6 @@ export default function Home() {
 
   return (
     <>
-      {/* {console.log(info)} */}
       <div className={styles.container}>
         <Head>
           <title>Create Next App</title>

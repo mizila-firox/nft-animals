@@ -99,6 +99,7 @@ const Market = () => {
         const item = await nft.getNftsMarket(parseInt(tokenId));
 
         const obj = {
+          id: item.id,
           name: item.name,
           image: item.imageUrl,
           date: item.date,
@@ -116,10 +117,9 @@ const Market = () => {
   return (
     <Container>
       {items.map((item, key) => {
-        // return <div key={key}>q</div>;
         return (
-          <ExteriorCard key={key}>
-            {console.log(item)}
+          <ExteriorCard key={parseInt(item.id)}>
+            {/* {console.log(item)} */}
             <CardHolder>
               <Card color="blue">
                 <img src={item.image} width="100px" alt="" />
@@ -127,7 +127,8 @@ const Market = () => {
               <CardItems>
                 <P>Name {item.name}</P>
                 <P>Owner {item.owner}</P>
-                {/* <P>price {item.price}</P> */}
+                <P>Id {parseInt(item.id)}</P>
+                <P>price {parseInt(item.price)}</P>
               </CardItems>
               <CardFooter>qwewq</CardFooter>
             </CardHolder>
