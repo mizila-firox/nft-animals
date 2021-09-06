@@ -91,19 +91,6 @@ const market = () => {
           <CardFooter>qwewq</CardFooter>
         </CardHolder>
       </ExteriorCard>{" "}
-      <ExteriorCard>
-        <CardHolder>
-          <Card color="tomato">
-            <img src="./one.png" width="100px" alt="" />
-          </Card>
-          <CardItems>
-            <P>Name</P>
-            <P>price</P>
-            <P>amount</P>
-          </CardItems>
-          <CardFooter>qwewq</CardFooter>
-        </CardHolder>
-      </ExteriorCard>
     </Container>
   );
 };

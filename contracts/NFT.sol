@@ -13,12 +13,39 @@ contract NFT is ERC721 {
         string imageUrl;
         uint256 date;
         address owner;
+        uint256 price;
     }
 
     mapping(address => mapping(uint256 => Nft)) public nfts;
+    mapping(uint256 => Nft) public nftsMarket;
 
-    constructor() ERC721("My Nft", "NFT") {
+    constructor() ERC721("Pixel Art", "PAR") {
         admin = msg.sender;
+
+        _createMarket("fox", "http://localhost:3000/three.png");
+        _createMarket("cat", "http://localhost:3000/four.png");
+        _createMarket("whale", "http://localhost:3000/five.png");
+        _createMarket("cat", "http://localhost:3000/six.jpeg");
+        _createMarket("dog", "http://localhost:3000/seven.png");
+    }
+
+    function _createMarket(string memory _name, string memory _imageUrl)
+        internal
+    {
+        require(msg.sender == admin, "you're not allowed. must be admin");
+
+        _safeMint(address(this), nextTokenId);
+        Nft memory n = Nft({
+            id: nextTokenId,
+            name: _name,
+            imageUrl: _imageUrl,
+            date: block.timestamp,
+            owner: address(this),
+            price: 0.01 ether
+        });
+
+        nftsMarket[nextTokenId] = n;
+        nextTokenId++;
     }
 
     function getNfts(address addr, uint256 i)
@@ -27,6 +54,10 @@ contract NFT is ERC721 {
         returns (Nft memory)
     {
         return nfts[addr][i];
+    }
+
+    function getNftsMarket(uint256 i) external view returns (Nft memory) {
+        return nftsMarket[i];
     }
 
     function mint(
@@ -43,7 +74,8 @@ contract NFT is ERC721 {
             name: name,
             imageUrl: imageUrl,
             date: block.timestamp,
-            owner: to
+            owner: to,
+            price: 0.01 ether
         });
 
         nfts[to][nextTokenId] = n;

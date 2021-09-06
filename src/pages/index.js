@@ -59,15 +59,17 @@ export default function Home() {
 
   useEffect(() => {
     const init = async () => {
+      // if (nft) {
+      //   console.log("there is");
+      // } else {
+      //   console.log("there is not");
+      // }
       const { nft } = await getBlockchain();
-      console.log(nft);
-      // const o = await nft.ownerOf(0);
-      // console.log(o);
+      setToken(nft);
       const balance = await nft.balanceOf(
         nft.provider.provider.selectedAddress
       );
       console.log(`balance ${balance}`);
-      setToken(nft);
 
       console.log(nft.provider.provider.selectedAddress);
       setAccount(nft.provider.provider.selectedAddress);
